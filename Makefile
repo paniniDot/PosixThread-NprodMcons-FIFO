@@ -5,20 +5,23 @@ LFLAGS=
 all: prodcons.exe
 
 prodcons.exe: prodcons.o DBGpthread.o
-	gcc ${LFLAGS} -o prodcons.exe prodcons.o DBGpthread.o ${LIBRARIES}
+	gcc ${LFLAGS} -o prodcons.exe ./bin/prodcons.o ./bin/DBGpthread.o ${LIBRARIES}
+	mv prodcons.exe ./bin
 
-prodcons.o: prodcons.c DBGpthread.h
-	gcc -c ${CFLAGS} prodcons.c 
+prodcons.o: ./src/prodcons.c ./src/DBGpthread.h
+	gcc -c ${CFLAGS} ./src/prodcons.c 
+	mv prodcons.o ./bin
 
-DBGpthread.o: DBGpthread.c printerror.h
-	gcc -c ${CFLAGS} DBGpthread.c
+DBGpthread.o: ./src/DBGpthread.c ./src/printerror.h
+	gcc -c ${CFLAGS} ./src/DBGpthread.c
+	mv DBGpthread.o ./bin
 
 .PHONY: clean run
 
 clean: 
-	rm -f *.exe *.o *~ core
+	rm -f ./bin/*.exe ./bin/*.o ./bin/*~ ./bin/core
 
 run: prodcons.exe
-	./prodcons.exe   
+	./bin/prodcons.exe   
 
 
